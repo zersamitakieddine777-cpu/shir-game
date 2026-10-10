@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>لعبة الشعر</title>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f6efe3;--card:#fffaf0;--ink:#2b2118;--mut:#7a6a58;--acc:#8a4b1f;--acc2:#fff;--bd:#e2d3bb;--bad:#b3261e;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1d1812;--card:#2a231a;--ink:#f1e6d3;--mut:#b5a58f;--acc:#d9a066;--acc2:#1d1812;--bd:#3e3427;--bad:#ff8a80}}
+:root[data-theme="dark"]{--bg:#1d1812;--card:#2a231a;--ink:#f1e6d3;--mut:#b5a58f;--acc:#d9a066;--acc2:#1d1812;--bd:#3e3427;--bad:#ff8a80}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",Tahoma,sans-serif;min-height:100vh;display:flex;justify-content:center;padding:16px}
+#s{width:100%;max-width:440px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:18px;padding:20px;text-align:center}
+h1,h2{font-family:Amiri,serif;margin:0 0 10px}
+h1{font-size:2.2rem;color:var(--acc)}
+ol{text-align:right;padding-inline-start:22px;line-height:1.9;color:var(--mut);margin:12px 0}
+button{display:block;width:100%;margin-top:10px;padding:14px;border:0;border-radius:12px;background:var(--acc);color:var(--acc2);font-size:1.05rem;font-weight:700;font-family:inherit}
+button.alt{background:transparent;color:var(--acc);border:2px solid var(--acc)}
+.big{font-family:Amiri,serif;font-size:5rem;color:var(--acc);line-height:1.2}
+.tm{font-size:2.4rem;font-weight:700;color:var(--acc)}
+.tm.low{color:var(--bad)}
+.who{color:var(--mut);font-weight:700}
+.last{font-family:Amiri,serif;font-size:1.25rem;line-height:1.8;margin:8px 0;padding:8px;border-radius:10px;background:var(--bg)}
+.lt{margin:8px 0;font-size:1.1rem}
+.lt b{font-family:Amiri,serif;font-size:2rem;color:var(--acc);vertical-align:middle}
+textarea,input{width:100%;font-family:Amiri,serif;font-size:20px;padding:10px;border-radius:12px;border:1px solid var(--bd);background:var(--bg);color:var(--ink);resize:none}
+.m{min-height:1.4em;color:var(--bad);margin:6px 0 0;font-size:.95rem}
+.hint{color:var(--mut);font-size:.85rem;margin:8px 0 0}
+body{--bg:rgba(255,255,255,.08);--card:rgba(20,14,40,.55);--bd:rgba(255,255,255,.18);--ink:#f7eddb;--mut:#cdbfa5;--acc:#f0b45a;--acc2:#241638;--bad:#ff8f87;--g1:#1b1438;--glow:#6a3fa0;background:var(--g1);color:var(--ink);transition:background-color 1s}
+body::before{content:"";position:fixed;inset:0;background:radial-gradient(circle at 50% 20%,var(--glow),transparent 65%);opacity:.55;z-index:0}
+body[data-t=war]{--g1:#2a0c0c;--glow:#c0392b;--acc:#ff9a52}
+body[data-t=love]{--g1:#2e0f25;--glow:#e0508a;--acc:#ff8fb8}
+body[data-t=wisdom]{--g1:#2a2108;--glow:#d9a81e;--acc:#ffd36b}
+body[data-t=night]{--g1:#0a1230;--glow:#3a5bd9;--acc:#a9c1ff}
+body[data-t=sea]{--g1:#06242c;--glow:#12a3b5;--acc:#7fe3ef}
+body[data-t=home]{--g1:#0f2a14;--glow:#3fae5a;--acc:#9be3a6}
+#s{position:relative;z-index:2}
+.card{background:var(--card);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);box-shadow:0 10px 40px rgba(0,0,0,.35);border-radius:22px}
+h1{font-size:2.6rem;text-shadow:0 0 18px var(--glow)}
+.big,.tm{text-shadow:0 0 16px var(--glow)}
+#fx{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:1}
+#fx span{position:absolute;opacity:0;animation:fl linear infinite}
+#fx.up span{bottom:-40px}
+#fx.dn span{top:-40px;animation-name:fd}
+@keyframes fl{0%{transform:translateY(0) rotate(0);opacity:0}15%{opacity:.8}100%{transform:translateY(-110vh) rotate(40deg);opacity:0}}
+@keyframes fd{0%{transform:translateY(0) rotate(0);opacity:0}15%{opacity:.8}100%{transform:translateY(110vh) rotate(-40deg);opacity:0}}
+.tg{position:fixed;top:calc(12px + env(safe-area-inset-top,0px));left:50%;transform:translateX(-50%);padding:6px 16px;border-radius:99px;background:var(--card);color:var(--acc);font-weight:700;z-index:3;animation:tg 2.5s forwards}
+@keyframes tg{0%{opacity:0}15%,80%{opacity:1}100%{opacity:0}}
+.av{width:56px;height:56px;border-radius:50%;object-fit:cover;display:inline-flex;align-items:center;justify-content:center;font-size:1.9rem;background:var(--bg);border:2px solid var(--bd)}
+.vs{display:flex;justify-content:center;align-items:center;gap:14px;margin-bottom:8px}
+.vs div{display:flex;flex-direction:column;align-items:center;opacity:.5;transition:.3s}
+.vs div.on{opacity:1}.vs div.on .av{border-color:var(--acc);box-shadow:0 0 14px var(--glow)}
+.vs small{margin-top:4px;max-width:90px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pl{display:flex;align-items:center;gap:12px;margin:12px 0}.pf{flex:1}
+.up{display:block;margin-top:8px;padding:8px;border:1px dashed var(--bd);border-radius:10px;color:var(--acc)}
+#sb{position:fixed;left:12px;bottom:calc(12px + env(safe-area-inset-bottom,0px));width:44px;height:44px;margin:0;padding:0;border-radius:50%;z-index:3;font-size:1.2rem;background:var(--card);border:1px solid var(--bd)}
+</style>
+</head>
+<body>
+<div id="fx"></div><div id="s"></div><button id="sb" onclick="mu()">🔊</button>
+<script>
+const V=["إذا الشعبُ يومًا أرادَ الحياةَ فلا بدَّ أن يستجيبَ القدرْ","بلادي وإنْ جارتْ عليَّ عزيزةٌ وأهلي وإنْ ضنّوا عليَّ كرامُ","وما نيلُ المطالبِ بالتمنّي ولكنْ تؤخذُ الدنيا غِلابا","على قدرِ أهلِ العزمِ تأتي العزائمُ وتأتي على قدرِ الكرامِ المكارمُ","الخيلُ والليلُ والبيداءُ تعرفُني والسيفُ والرمحُ والقرطاسُ والقلمُ","لكلِّ امرئٍ من دهرِهِ ما تعوّدا وعادةُ سيفِ الدولةِ الطعنُ في العدا","قفا نبكِ من ذكرى حبيبٍ ومنزلِ بسقطِ اللوى بينَ الدخولِ فحومل","كفى بكَ داءً أنْ ترى الموتَ شافيا وحسبُ المنايا أنْ يكنَّ أمانيا","ما كلُّ ما يتمنّى المرءُ يدركُهُ تجري الرياحُ بما لا تشتهي السفنُ","نعيبُ زمانَنا والعيبُ فينا وما لزماننا عيبٌ سوانا","يا ليلُ الصبُّ متى غدُهُ أقيامُ الساعةِ موعدُهُ","تعلّمْ فليسَ المرءُ يولدُ عالِمًا وليسَ أخو علمٍ كمَن هو جاهلُ","ربَّ يومٍ بكيتُ منهُ فلمّا صرتُ في غيرِهِ بكيتُ عليهِ","هذا الذي تعرفُ البطحاءُ وطأتَهُ والبيتُ يعرفُهُ والحلُّ والحرمُ","دعِ الأيامَ تفعلُ ما تشاءُ وطبْ نفسًا إذا حكمَ القضاءُ","لا تحسبنَّ المجدَ تمرًا أنتَ آكلُهُ لن تبلغَ المجدَ حتى تلعقَ الصَّبِرا","جزى اللهُ الشدائدَ كلَّ خيرٍ عرفتُ بها عدوّي من صديقي","شكوتُ إلى وكيعٍ سوءَ حفظي فأرشدني إلى تركِ المعاصي","ذو العقلِ يشقى في النعيمِ بعقلِهِ وأخو الجهالةِ في الشقاوةِ ينعمُ","غيرُ مجدٍ في ملّتي واعتقادي نوحُ باكٍ ولا ترنّمُ شادِ","أنا الذي نظرَ الأعمى إلى أدبي وأسمعتْ كلماتي مَن بهِ صممُ","عيدٌ بأيّةِ حالٍ عدتَ يا عيدُ بما مضى أم لأمرٍ فيكَ تجديدُ","لا تسقِني ماءَ الحياةِ بذلّةٍ بل فاسقِني بالعزِّ كأسَ الحنظلِ","من يهُنْ يسهُلِ الهوانُ عليهِ ما لجرحٍ بميّتٍ إيلامُ","وإذا كانتِ النفوسُ كبارًا تعبتْ في مرادِها الأجسامُ","إذا غامرتَ في شرفٍ مرومٍ فلا تقنعْ بما دونَ النجومِ","يقولونَ ليلى في العراقِ مريضةٌ فيا ليتني كنتُ الطبيبَ المداويا","زعمَ الفرزدقُ أنْ سيقتلُ مربعًا أبشِرْ بطولِ سلامةٍ يا مربعُ","ثلاثةٌ تشرقُ الدنيا ببهجتِها شمسُ الضحى وأبو إسحاقَ والقمرُ","حسدوا الفتى إذ لم ينالوا سعيَهُ فالقومُ أعداءٌ لهُ وخصومُ","خُلِقتُ ألوفًا لو رجعتُ إلى الصبا لفارقتُ شيبي موجعَ القلبِ باكيا","سأضربُ في طولِ البلادِ وعرضِها أنالُ مرادي أو أموتُ غريبا","صفحنا عن بني ذهلٍ وقلنا القومُ إخوانُ عسى الأيامُ أن يرجعنَ قومًا كالذي كانوا","ضحكنا وكان الضحكُ منا سفاهةً وحقٌّ لسكانِ البسيطةِ أن يبكوا","طلبتُ المستقرَّ بكلِّ أرضٍ فلم أرَ لي بأرضٍ مستقرّا","ظلمُ ذوي القربى أشدُّ مضاضةً على المرءِ من وقعِ الحسامِ المهنّدِ","فإنْ تفُقِ الأنامَ وأنتَ منهم فإنَّ المسكَ بعضُ دمِ الغزالِ","من لم يمتْ بالسيفِ ماتَ بغيرِهِ تعدّدتِ الأسبابُ والموتُ واحدُ","ما أكثرَ الإخوانَ حينَ تعدُّهم ولكنّهم في النائباتِ قليلُ","لعمرُكَ ما الإنسانُ إلا ابنُ يومِهِ على ما تجلّى يومُهُ لا ابنُ أمسِهِ","نقِّلْ فؤادَكَ حيثُ شئتَ من الهوى ما الحبُّ إلا للحبيبِ الأوّلِ","يا دارَ مَيّةَ بالعلياءِ فالسّندِ أقوتْ وطالَ عليها سالفُ الأبدِ","دعِ المقاديرَ تجري في أعِنّتِها ولا تبيتنَّ إلا خاليَ البالِ","رُبَّما تجزعُ النفوسُ من الأمرِ لهُ فرجةٌ كحلِّ العقالِ","هلْ غادرَ الشعراءُ من متردَّمِ أمْ هلْ عرفتَ الدارَ بعدَ توهّمِ","عرفتُ الشرَّ لا للشرِّ لكنْ لتوقّيهِ ومن لا يعرِفِ الشرَّ من الناسِ يقعْ فيهِ","ومن يكُ ذا فضلٍ فيبخلْ بفضلِهِ على قومِهِ يُستغنَ عنهُ ويُذممِ","ومن لا يحبُّ صعودَ الجبالِ يعِشْ أبدَ الدهرِ بينَ الحُفَرْ","قد يُدركُ المتأنّي بعضَ حاجتِهِ وقد يكونُ مع المستعجِلِ الزللُ","كلُّ ابنِ أنثى وإن طالتْ سلامتُهُ يومًا على آلةٍ حدباءَ محمولُ","تُعيِّرُنا أنّا قليلٌ عديدُنا فقلتُ لها إنَّ الكرامَ قليلُ","أنا البحرُ في أحشائهِ الدرُّ كامنٌ فهل ساءلوا الغوّاصَ عن صدفاتي","وليلٍ كموجِ البحرِ أرخى سدولَهُ عليَّ بأنواعِ الهمومِ ليبتلي","أمرُّ على الديارِ ديارَ ليلى أقبِّلُ ذا الجدارِ وذا الجدارا","وطني لو شُغلتُ بالخلدِ عنهُ نازعتني إليهِ في الخلدِ نفسي","ولقد ذكرتُكِ والرماحُ نواهلٌ منّي وبيضُ الهندِ تقطرُ من دمي","ألا أيّها الليلُ الطويلُ ألا انجلي بصبحٍ وما الإصباحُ منكَ بأمثلِ"];
+const S=document.getElementById('s'),$=id=>document.getElementById(id);
+const e=s=>s.replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+const norm=s=>s.replace(/[\u064B-\u065F\u0670\u0640]/g,'').replace(/[أإآٱءؤئ]/g,'ا').replace(/ى/g,'ي').replace(/ة/g,'ه').replace(/[^\u0621-\u064A]/g,'');
+let M,T,L,U,last,iv,t;
+const nm=p=>M==1?(p==0?e(P[0].n||'أنت'):OPP[D].n):e(P[p].n||'اللاعب '+(p+1));
+
+function start(){
+ clearInterval(iv);
+ S.innerHTML=`<div class="card"><h1>📜 لعبة الشعر</h1>
+ <p>يقول اللاعب بيتًا، ويردّ الخصم ببيت يبدأ بآخر حرف من بيته.</p>
+ <ol><li>اكتب بيتًا كاملًا ثم اضغط «تم».</li>
+ <li>يظهر للخصم الحرف الأخير، وعليه أن يبدأ به.</li>
+ <li>لكل دور وقت محدد حسب المستوى. إذا انتهى وقتك تخسر ويفوز الخصم.</li>
+ <li>في وضع اللاعبين: بعد «تم» مرّر الجوال للخصم ليضغط «أنا جاهز».</li></ol>
+ <button onclick="lv(1)">🤖 ضد الكمبيوتر</button>
+ <button class="alt" onclick="lv(2)">👥 لاعبان على نفس الجوال</button><p class="hint">من تصميم <bdi>sami taki eddine</bdi></p></div>`;
+}
+function lv(m){S.innerHTML=`<div class="card"><h2>اختر المستوى</h2><button onclick="go(${m},0)">🌱 سهل — 60 ثانية${m==1?'، والكمبيوتر قد يستسلم':''}</button><button onclick="go(${m},1)">🌿 متوسط — 30 ثانية</button><button onclick="go(${m},2)">🔥 صعب — 15 ثانية${m==1?'، والكمبيوتر يلاحقك بحروف صعبة':''}</button><button class="alt" onclick="start()">رجوع</button></div>`}
+function go(m,i){M=m;if(i!==undefined)D=i;T=0;L=null;U=new Set();last='';R=[[],[]];fx('');setup();}
+
+function pass(){
+ S.innerHTML=`<div class="card">${bkb()}${vs()}<h2>📱 مرّر الجوال إلى ${nm(T)}</h2>
+ <p>سيبدأ الوقت (${LV[D].t} ثانية) عندما يضغط ${nm(T)} على «أنا جاهز».</p>
+ ${L?`<p class="who">الحرف المطلوب</p><div class="big">${L}</div>`:'<p class="who">ابدأ بأي بيت تحب</p>'}
+ <button onclick="play()">أنا جاهز</button></div>`;
+}
+function play(){
+ t=LV[D].t;ts=Date.now();
+ S.innerHTML=`<div class="card">${bkb()}${vs()}${M==1?`<div class="hint">الجولة ${R[0].length+1} من 10</div>`:''}<div id="tm" class="tm">${t}</div>
+ ${last?`<div class="last">${e(last)}</div>`:''}
+ <div class="lt">${L?`ابدأ بحرف <b>${L}</b>`:'ابدأ بأي بيت تحب'}</div>
+ <input id="i" placeholder="الشطر الأول (الصدر)"><input id="i2" placeholder="الشطر الثاني (العجز)" style="margin-top:8px">
+ <p id="m" class="m"></p><button onclick="send()">تم</button>
+ ${M==2?'<p class="hint">بعد «تم» مرّر الجوال للخصم.</p>':''}</div>`;
+ clearInterval(iv);
+ iv=setInterval(()=>{t--;const x=$('tm');x.textContent=t;if(t<=5){x.className='tm low';snd([t<=2?988:784])}if(t<=0){clearInterval(iv);end(`انتهى وقت ${nm(T)}! ${M==1?'فاز الكمبيوتر 🤖':'فاز '+nm(1-T)+' 🎉<br><small>مرّر الجوال للفائز ليحتفل 😄</small>'}`)}},1000);
+}
+function send(){
+ const a=$('i').value.trim(),b=$('i2').value.trim(),v=a+' … '+b,n=norm(a+b),m=$('m'),la=norm(a).length,lc=norm(b).length;
+ if(!a||!b){m.textContent='اكتب الشطرين معًا: الصدر ثم العجز.';return}
+ if(a.split(/\s+/).length<2||b.split(/\s+/).length<2||Math.min(la,lc)<8||Math.max(la,lc)>2*Math.min(la,lc)||norm(a)==norm(b)){m.textContent='الشطران غير متقاربين في الطول، تأكد من كتابة البيت كاملاً.';return}
+ if(n.length<6){m.textContent='اكتب بيتًا كاملًا.';return}
+ if(L&&n[0]!==L){m.textContent=`يجب أن يبدأ البيت بحرف «${L}».`;return}
+ if(U.has(n)){m.textContent='هذا البيت قيل من قبل.';return}
+ clearInterval(iv);U.add(n);L=n.slice(-1);last=v;rec(T);fx(v);if(M==1&&R[0].length>=10){end('🎉 فزتَ! أنهيتَ عشر جولات وخسر الكمبيوتر');return}
+ if(M==1){
+  T=1;S.innerHTML='<div class="card">'+vs()+'<h2>🤖 الكمبيوتر يفكّر…</h2></div>';
+  setTimeout(()=>{
+   const c=V.filter(x=>!U.has(norm(x))&&norm(x)[0]===L);
+   if(!c.length||Math.random()<LV[D].g){end(`${c.length?'تظاهر الكمبيوتر بالعجز':'انتهت أبيات الكمبيوتر'} عند حرف «${L}». فزتَ! 🎉`);return}
+   const x=(D==2||(D==1&&Math.random()<.5))?c.map(y=>[y,V.filter(z=>!U.has(norm(z))&&norm(z)[0]===norm(y).slice(-1)).length]).sort((a,b)=>a[1]-b[1])[0][0]:c[Math.floor(Math.random()*c.length)];
+   U.add(norm(x));L=norm(x).slice(-1);last=x;fx(x);T=0;play();
+  },900);
+ }else{T=1-T;pass();}
+}
+function end(msg){
+ clearInterval(iv);
+ S.innerHTML=`<div class="card"><h2>${msg}</h2><button onclick="go(M)">العب مرة أخرى</button><button class="alt" onclick="start()">القائمة الرئيسية</button></div>`;
+}
+function gate(){
+ S.innerHTML=`<div class="card"><h1>🔒 البوابة</h1><p>للدخول إلى اللعبة أجب عن السؤال:</p><p class="lt">ما هي الرياضة المفضلة لـ <bdi>sami taki eddine</bdi>؟</p><input id="a" placeholder="اكتب الإجابة بنفسك"><p id="m" class="m"></p><button onclick="chk()">دخول</button><p class="hint">لعبة من تصميم <bdi>sami taki eddine</bdi></p></div>`;
+}
+function chk(){
+ if(norm($('a').value)==='كرهالقدم')start();else $('m').textContent='إجابة خاطئة، حاول مرة أخرى.';
+}
+const LV=[{t:60,g:0},{t:30,g:0},{t:15,g:0}];let D=1,ac,mute=false;
+const TH={war:{n:'⚔️ أجواء الحماسة',e:['⚔️','🔥','🐎'],m:'up',s:[196,147,196]},love:{n:'💖 أجواء الغزل والشوق',e:['💖','🌹','✨'],m:'up',s:[523,659,784]},wisdom:{n:'📚 أجواء الحكمة',e:['📚','💡','✨'],m:'up',s:[392,523,659]},night:{n:'🌙 أجواء الليل',e:['🌙','⭐','✨'],m:'dn',s:[330,392,494]},sea:{n:'🌊 أجواء البحر',e:['🌊','⛵','🐚'],m:'up',s:[262,330,392]},home:{n:'🌴 أجواء الوطن',e:['🌴','🕌','🌿'],m:'dn',s:[294,370,440]},def:{n:'',e:['✨'],m:'up',s:[440,554]}};
+const KW={war:'سيف رمح خيل حرب حسام منايا موت طعن العدا',love:'حب هوي ليلي شوق بكي الصب غرام عيون وداع',wisdom:'علم عقل صبر مجد حلم جهل عزم كتاب ادب نفس',night:'ليل قمر شمس نجوم بيداء ضحي',sea:'سفن رياح بحر موج',home:'بلاد شعب وطن اهلي بطحاء ارض حياه قدر'};
+function theme(v){const n=norm(v);let b='def',m=0;for(const k in KW){const c=KW[k].split(' ').filter(w=>n.includes(w)).length;if(c>m){m=c;b=k}}return b}
+function snd(a){if(mute)return;try{ac=ac||new(window.AudioContext||window.webkitAudioContext)();a.forEach((f,i)=>{const o=ac.createOscillator(),g=ac.createGain(),s=ac.currentTime+i*.15;o.frequency.value=f;o.connect(g);g.connect(ac.destination);g.gain.setValueAtTime(.12,s);g.gain.exponentialRampToValueAtTime(.001,s+.4);o.start(s);o.stop(s+.45)})}catch(x){}}
+function mu(){mute=!mute;$('sb').textContent=mute?'🔇':'🔊'}
+function fx(v){const k=v?(vth(v)||theme(v)):'def',h=TH[k],f=$('fx');document.body.dataset.t=k;f.className=h.m;f.innerHTML=h.n?`<div class="tg">${h.n}</div>`:'';for(let i=0;i<22;i++){const p=document.createElement('span');p.textContent=h.e[i%h.e.length];p.style.cssText=`left:${Math.random()*100}%;font-size:${14+Math.random()*22}px;animation-duration:${5+Math.random()*7}s;animation-delay:${-Math.random()*8}s`;f.appendChild(p)}if(v)snd(h.s)}
+const P=[{n:'',a:''},{n:'',a:''}];
+function av(p){if(M==1)return `<span class="av">${p?OPP[D].a:'🧑'}</span>`;return P[p].a?`<img class="av" src="${P[p].a}">`:`<span class="av">${p?'🌙':'☀️'}</span>`}
+function vs(){return `<div class="vs">${[0,1].map(i=>`<div class="${i==T?'on':''}">${av(i)}<small>${nm(i)}${M==1&&i==1?'<br>🤖 كمبيوتر':''}</small></div>`).join('<b>⚔️</b>')}</div>`}
+function setup(){S.innerHTML=`<div class="card"><h2>تعريف اللاعبَين</h2>${[0,1].map(i=>`<div class="pl"><div id="av${i}">${av(i)}</div><div class="pf"><input id="n${i}" maxlength="14" placeholder="اسم اللاعب ${i+1}" value="${e(P[i].n).replace(/"/g,'&quot;')}"><label class="up">📷 اختر صورة<input type="file" accept="image/*" hidden onchange="pic(${i},this)"></label></div></div>`).join('')}<button onclick="begin()">ابدأ اللعب</button><p class="hint">الصورة تبقى على جوالك فقط ولا تُرفع إلى أي مكان.</p></div>`}
+function begin(){[0,1].forEach(i=>P[i].n=$('n'+i).value.trim());pass()}
+function pic(i,f){if(!f.files[0])return;const r=new FileReader();r.onload=()=>{const im=new Image();im.onload=()=>{const c=document.createElement('canvas');c.width=c.height=128;const s=Math.min(im.width,im.height);c.getContext('2d').drawImage(im,(im.width-s)/2,(im.height-s)/2,s,s,0,0,128,128);P[i].a=c.toDataURL('image/jpeg',.8);$('av'+i).innerHTML=av(i)};im.src=r.result};r.readAsDataURL(f.files[0])}
+function setup(){const n=M==1?1:2;S.innerHTML=`<div class="card"><h2>${n==1?'ما اسمك؟':'أسماء اللاعبين'}</h2>${[...Array(n).keys()].map(i=>`<div class="pl"><div>${av(i)}</div><div class="pf"><input id="n${i}" maxlength="14" placeholder="${n==1?'اسمك':'اسم اللاعب '+(i+1)}" value="${e(P[i].n).replace(/"/g,'&quot;')}"></div></div>`).join('')}${FORM?`<p class="hint">🏆 اسمك وتقييم سرعتك سيظهران في لوحة الشرف عند <bdi>sami taki eddine</bdi></p>`:''}<button onclick="begin()">ابدأ اللعب</button><button class="alt" onclick="lv(M)">رجوع</button></div>`}
+function begin(){const n=M==1?1:2;for(let i=0;i<n;i++)P[i].n=$('n'+i).value.trim();M==1?play():pass()}
+const FORM='https://docs.google.com/forms/d/e/1FAIpQLSfweXUbIXGH_VRcfdkULZOCMcz4cgHT9OyjWQKSPXY2ARNPhQ/formResponse',ENT='entry.2014706264';let ts=0,R=[[],[]];
+function rec(i){R[i].push((Date.now()-ts)/1000)}
+function lb(n,a){try{const k='shirLB',d=JSON.parse(localStorage.getItem(k)||'[]');d.push({s:+a.toFixed(1)});d.sort((x,y)=>x.s-y.s);localStorage.setItem(k,JSON.stringify(d.slice(0,5)))}catch(x){}}
+function sendF(n,a,ti){if(!FORM||!ENT)return;fetch(FORM,{method:'POST',mode:'no-cors',body:new URLSearchParams({[ENT]:`${n} | ${a.toFixed(1)}ث | ${ti}`})}).catch(()=>{})}
+function end(msg){clearInterval(iv);let h='';for(let i=0;i<(M==1?1:2);i++){const r=R[i];if(!r.length)continue;const a=r.reduce((x,y)=>x+y,0)/r.length,q=a/LV[D].t,ti=q<.25?'شاعر البديهة ⚡':q<.6?'سريع الخاطر 🚀':'المتأنّي 🐢',nn=P[i].n||'لاعب مجهول';h+=`<p class="lt">${nm(i)}: ${a.toFixed(1)} ث — ${ti}</p>`;lb(nn,a);sendF(nn,a,ti)}let b='';try{const d=JSON.parse(localStorage.getItem('shirLB')||'[]');if(d.length)b=`<p class="who">🏆 أسرع أزمنة على هذا الجوال</p>`+d.map((x,i)=>`<div>${i+1}. ${x.s} ث</div>`).join('')}catch(x){}S.innerHTML=`<div class="card"><h2>${msg}</h2>${h}${b}<button onclick="go(M)">العب مرة أخرى</button><button class="alt" onclick="start()">القائمة الرئيسية</button></div>`}
+const OPP=[{n:'الشاعر الناشئ',a:'🌱',l:'سهل',d:'60 ثانية، وقد يستسلم'},{n:'الشاعر الماهر',a:'🎓',l:'صعب',d:'30 ثانية، نادرًا ما يستسلم'},{n:'أمير الشعراء',a:'👑',l:'صعب جدًا',d:'15 ثانية، ولا يستسلم'}];
+function lv(m){if(m==2){S.innerHTML=`<div class="card"><h2>اختر الوقت</h2><button onclick="go(2,0)">🌱 سهل — 60 ثانية</button><button onclick="go(2,1)">🔥 صعب — 30 ثانية</button><button onclick="go(2,2)">⚡ صعب جدًا — 15 ثانية</button><button class="alt" onclick="start()">رجوع</button></div>`;return}S.innerHTML=`<div class="card"><h2>اختر خصمك</h2>${OPP.map((o,i)=>`<button onclick="go(1,${i})"><span style="font-size:1.5rem">${o.a}</span> ${o.n} — ${o.l}<br><small>🤖 كمبيوتر · ${[60,30,15][i]} ثانية</small></button>`).join('')}<button class="alt" onclick="start()">رجوع</button></div>`}
+function bkb(){return '<button id="bk" class="alt" style="width:auto;display:inline-block;padding:6px 14px;margin:0 0 8px;font-size:.85rem" onclick="bk()">⬅ رجوع</button>'}
+function bk(){if(bk.c){bk.c=0;start();fx('');return}bk.c=1;const b=$('bk');if(b)b.textContent='اضغط مرة أخرى للخروج';setTimeout(()=>{bk.c=0;const x=$('bk');if(x)x.textContent='⬅ رجوع'},2500)}
+const _s=send;send=function(){_s();const m=$('m');if(m&&m.textContent)snd([180,140])};
+const _e=end;end=function(msg){_e(msg);snd(M==1&&msg.includes('فاز الكمبيوتر')?[330,262,196]:[523,659,784,1047])};
+document.addEventListener('click',x=>{const b=x.target.closest&&x.target.closest('button');if(ac&&ac.state=='suspended')ac.resume();if(b&&b.id!='sb'&&b.textContent.trim()!='تم')snd([700])});
+let mg;const MEL=[294,311,370,392,370,311,294,262,294,311,370,392,440,392,370,311];let mi=0,mst=0,mus=true;
+function ctx(){if(!ac){ac=new(window.AudioContext||window.webkitAudioContext)();const c=ac,d=c.createDelay(),fb=c.createGain(),wt=c.createGain(),lp=c.createBiquadFilter();mg=c.createGain();mg.gain.value=.9;d.delayTime.value=.23;fb.gain.value=.35;wt.gain.value=.3;lp.type='lowpass';lp.frequency.value=2500;mg.connect(c.destination);mg.connect(d);d.connect(lp);lp.connect(fb);fb.connect(d);lp.connect(wt);wt.connect(c.destination)}return ac}
+function nt(f,w,d,o){o=o||{};const c=ac,x=c.createOscillator(),g=c.createGain(),v=o.v||.2,a=o.a||.01;x.type=o.ty||'sine';x.frequency.setValueAtTime(f,w);if(o.sl)x.frequency.exponentialRampToValueAtTime(Math.max(20,f*o.sl),w+d);if(o.det)x.detune.value=o.det;let n=x;if(o.fl){const b=c.createBiquadFilter();b.type='lowpass';b.frequency.value=o.fl;x.connect(b);n=b}n.connect(g);g.connect(mg);g.gain.setValueAtTime(.0001,w);g.gain.exponentialRampToValueAtTime(v,w+a);g.gain.exponentialRampToValueAtTime(.0001,w+d);x.start(w);x.stop(w+d+.05)}
+function nz(w,d,fr,v,sw){const c=ac,b=c.createBuffer(1,Math.floor(c.sampleRate*d),c.sampleRate),y=b.getChannelData(0);for(let i=0;i<y.length;i++)y[i]=Math.random()*2-1;const s=c.createBufferSource(),f=c.createBiquadFilter(),g=c.createGain();s.buffer=b;f.type='bandpass';f.frequency.setValueAtTime(fr,w);if(sw)f.frequency.exponentialRampToValueAtTime(sw,w+d);g.gain.setValueAtTime(v,w);g.gain.exponentialRampToValueAtTime(.0001,w+d);s.connect(f);f.connect(g);g.connect(mg);s.start(w)}
+function bell(f,w,v){nt(f,w,1.4,{v:v});nt(f*2.01,w,.7,{v:v*.4});nt(f*3.02,w,.35,{v:v*.2})}
+function pluck(f,w,v){nt(f,w,.7,{ty:'triangle',v:v,fl:2000,a:.004});nt(f,w,.5,{ty:'triangle',v:v*.6,fl:1500,a:.004,det:7})}
+function win(w){[523,659,784,1047,1319].forEach((f,i)=>bell(f,w+i*.09,.16));[523,659,784].forEach(f=>nt(f,w+.5,1.2,{ty:'triangle',v:.1,fl:1800}));nz(w+.45,.6,6000,.06)}
+function lose(w){nt(392,w,.7,{ty:'triangle',v:.2,sl:.55,fl:1500});nt(294,w+.4,1,{ty:'triangle',v:.2,sl:.6,fl:1200})}
+function er(w){nt(160,w,.22,{ty:'sawtooth',v:.14,fl:500,sl:.6});nt(120,w+.13,.28,{ty:'sawtooth',v:.14,fl:450,sl:.6})}
+function thm(k,w){if(k=='war'){[0,.2,.4].forEach(d=>{nt(130,w+d,.28,{v:.5,sl:.3});nz(w+d,.12,200,.25,80)});nt(196,w+.5,.8,{ty:'sawtooth',v:.1,fl:700})}else if(k=='love'){[523,659,784,988].forEach((f,i)=>bell(f,w+i*.11,.1))}else if(k=='wisdom'){[392,523,659].forEach((f,i)=>bell(f,w+i*.09,.14))}else if(k=='night'){[330,392,494].forEach(f=>nt(f,w,1.6,{v:.13,a:.35}));nt(1760,w+.4,.5,{v:.04});nt(2093,w+.7,.5,{v:.03})}else if(k=='sea'){nz(w,1.4,250,.3,1400);bell(262,w+.3,.1);bell(392,w+.55,.08)}else if(k=='home'){[294,370,440].forEach((f,i)=>pluck(f,w+i*.13,.18))}else{pluck(440,w,.15);pluck(554,w+.12,.15)}}
+function snd(a){if(mute)return;try{ctx();const w=ac.currentTime+.01,k=Object.keys(TH).find(q=>TH[q].s.join()==a.join()),A=a[0];if(k)thm(k,w);else if(a.length==1&&A==700)nt(520,w,.09,{ty:'triangle',v:.12,sl:.6});else if(a.length==1)nt(A>900?1320:1000,w,.07,{ty:'square',v:A>900?.1:.06,fl:2600});else if(A==180)er(w);else if(A==330&&a[1]==262)lose(w);else win(w)}catch(x){}}
+function mtick(){if(!mus||mute||!ac)return;const w=ac.currentTime+.02;if(Math.random()<.75)pluck(MEL[mi%16],w,.05);if(mi%8==0){nt(147,w,3.6,{v:.04,a:1,fl:600});nt(220,w,3.6,{v:.025,a:1.2,fl:600})}mi++}
+function togM(){mus=!mus;$('mbtn').style.opacity=mus?1:.4}
+{const b=document.createElement('button');b.id='mbtn';b.textContent='🎵';b.onclick=togM;b.style.cssText='position:fixed;left:64px;bottom:calc(12px + env(safe-area-inset-bottom,0px));width:44px;height:44px;margin:0;padding:0;border-radius:50%;z-index:3;font-size:1.2rem;background:var(--card);border:1px solid var(--bd)';document.body.appendChild(b)}
+document.addEventListener('click',()=>{if(!mst){mst=1;try{ctx()}catch(x){}setInterval(mtick,450)}});
+const VT='home home wisdom war war war love wisdom sea wisdom love wisdom love home wisdom wisdom wisdom wisdom wisdom wisdom wisdom night war wisdom wisdom war love war night wisdom love war wisdom wisdom home war wisdom war wisdom wisdom love love wisdom wisdom love wisdom wisdom war wisdom night war sea night love home war night'.split(' ');
+function vth(v){const i=V.indexOf(v);return i>=0?VT[i]:null}
+fx('');gate();
+</script>
+</body>
+</html>
